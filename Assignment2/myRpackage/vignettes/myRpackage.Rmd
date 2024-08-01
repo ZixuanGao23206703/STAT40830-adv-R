@@ -1,0 +1,45 @@
+---
+title: "myRpackage"
+author: "zixuan gao"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{myRpackage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+This is the vignette for package 'myRpackage' to read and analyze Human Development Indicators data.  
+```{r setup}
+library(myRpackage)
+library(ggplot2) 
+```
+This is how the function works and print the first columns of data.
+```{r}
+data_chn <- read_hdi(system.file("extdata", "hdro_indicators_chn.csv", package = "myRpackage"))
+data_irl <- read_hdi(system.file("extdata", "hdro_indicators_irl.csv", package = "myRpackage"))
+data_jpn <- read_hdi(system.file("extdata", "hdro_indicators_jpn.csv", package = "myRpackage"))
+
+print(head(data_chn))
+print(head(data_irl))
+print(head(data_jpn))
+```
+This is Summary of the Data
+```{r}
+summary(data_chn)
+summary(data_irl)
+summary(data_jpn)
+```
+This is Plot of the Data
+```{r}
+plot(data_chn)
+plot(data_irl)
+plot(data_jpn)
+```
+
+

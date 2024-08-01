@@ -1,0 +1,46 @@
+---
+title: "Assignment2"
+author: "Zixuan Gao23206703"
+format: html
+editor: visual
+---
+
+## Assignment 2
+
+Write an R package to read and summarise the Human Development Indicators data.
+
+```{r, echo=TRUE, eval=FALSE}
+# install.packages("devtools")
+# install.packages("roxygen2")
+# install.packages("available")
+library(devtools)
+library(roxygen2)
+library(available)
+```
+
+```{r, echo=TRUE, eval=FALSE}
+has_devel()
+```
+
+```{r, echo=TRUE, eval=FALSE}
+create("myRpackage")
+```
+
+```{r, echo=TRUE, eval=FALSE}
+available::available("myRpackage")
+```
+
+```{r, echo=TRUE, eval=FALSE}
+rm(list = c("read_hdi"))
+devtools::document()
+```
+
+```{r, echo=TRUE, eval=FALSE}
+usethis::use_vignette("myRpackage")
+```
+
+```{r, echo=TRUE, eval=FALSE}
+devtools::build()
+devtools::build_vignettes()
+devtools::build_manual()
+```
