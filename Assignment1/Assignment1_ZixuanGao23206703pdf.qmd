@@ -1,0 +1,218 @@
+---
+title: "assignment1"
+author: "Zixuan Gao23206703"
+date: "June 2024"
+format:
+  pdf:
+    toc: true
+    toc-title: \textcolor{Orange}{Contents}
+    embed-resources: true
+    fontsize: 1.2em
+    pagebreaks: true  
+---
+
+```{r,echo=FALSE,message=FALSE,include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,           # Show code by default
+  message = FALSE,       # Suppress messages
+  warning = FALSE,       # Suppress warnings
+  fig.width = 4,         # Default figure width
+  fig.height = 3,        # Default figure height
+  fig.align = 'center',  # Center-align figures
+  size = 'footnotesize'  # Use a smaller font size for code and output
+)
+```
+
+# \textcolor{orange}{Dataloading}
+
+Use `data.table` to read in the data and assign the correct class to the variables.
+
+Merge the data datasets using `data.table`.
+
+# read in the data&assign the correct class to the variables.
+
+```{r,echo=TRUE, size='small'}
+library(data.table)
+
+hdro_indicators_irl <- fread('hdro_indicators_irl.csv')
+hdro_indicators_irl <- hdro_indicators_irl[-1]
+hdro_indicators_irl[, year := as.integer(year)]
+hdro_indicators_irl[, value := as.numeric(value)]
+hdro_indicators_irl[, country_code := as.factor(country_code)]
+hdro_indicators_irl[, country_name := as.factor(country_name)]
+hdro_indicators_irl[, indicator_id := as.factor(indicator_id)]
+hdro_indicators_irl[, indicator_name := as.factor(indicator_name)]
+hdro_indicators_irl[, index_id := as.factor(index_id)]
+hdro_indicators_irl[, index_name := as.factor(index_name)]
+```
+
+# read in the data&assign the correct class to the variables.
+
+```{r,echo=TRUE, size='small'}
+hdro_indicators_jpn <- fread('hdro_indicators_jpn.csv')
+hdro_indicators_jpn <- hdro_indicators_jpn[-1]
+hdro_indicators_jpn[, year := as.integer(year)]
+hdro_indicators_jpn[, value := as.numeric(value)]
+hdro_indicators_jpn[, country_code := as.factor(country_code)]
+hdro_indicators_jpn[, country_name := as.factor(country_name)]
+hdro_indicators_jpn[, indicator_id := as.factor(indicator_id)]
+hdro_indicators_jpn[, indicator_name := as.factor(indicator_name)]
+hdro_indicators_jpn[, index_id := as.factor(index_id)]
+hdro_indicators_jpn[, index_name := as.factor(index_name)]
+
+```
+
+# read in the data&assign the correct class to the variables.
+
+```{r,echo=TRUE, size='small'}
+hdro_indicators_chn <- fread('hdro_indicators_chn.csv')
+hdro_indicators_chn <- hdro_indicators_chn[-1]
+hdro_indicators_chn[, year := as.integer(year)]
+hdro_indicators_chn[, value := as.numeric(value)]
+hdro_indicators_chn[, country_code := as.factor(country_code)]
+hdro_indicators_chn[, country_name := as.factor(country_name)]
+hdro_indicators_chn[, indicator_id := as.factor(indicator_id)]
+hdro_indicators_chn[, indicator_name := as.factor(indicator_name)]
+hdro_indicators_chn[, index_id := as.factor(index_id)]
+hdro_indicators_chn[, index_name := as.factor(index_name)]
+```
+
+# Merge the data datasets
+
+```{r,echo=TRUE, size='small'}
+data <- list(hdro_indicators_irl, 
+             hdro_indicators_jpn, 
+             hdro_indicators_chn)
+hdro_data <- rbindlist(data)
+```
+
+# \textcolor{orange}{Exploratory Data Analysis(EDA)}
+
+# part1 quick data exploration
+
+```{r,echo=TRUE, size='small'}
+library(dplyr)
+str(hdro_data) # structure
+```
+
+From the dataset structure, there are 2 numerical variables and 6 factor variables.\vspace{2mm}
+
+# part1 quick data exploration
+
+```{r,echo=TRUE, size='small'}
+summary(hdro_data)
+```
+
+# Explanation
+
+-   The `value` field ranges widely from -22 (possibly indicating some form of deficit or decrease) to 108,423.61, reflecting substantial variation possibly due to different types of indicators included (such as monetary values, rates, or counts).\vspace{2mm}
+
+-   Data collection spans from 1990 to 2022, allowing for longitudinal studies and trend analysis over a significant period.\vspace{2mm}
+
+# part1 quick data exploration
+
+```{r,echo=TRUE, size='small'}
+# Calculate the number of data rows for each combination 
+# of country and indicator using data.table syntax
+result <- hdro_data[, .N, by = .(country_name, 
+                                 indicator_name)]
+result[order(-N)]
+
+# Use dplyr syntax to group data by country name and 
+# calculate the mean value and count of records for each group
+hdro_data %>%
+  group_by(country_name) %>%
+  summarise(mean_value = mean(value), n = n())
+```
+
+# Explanation
+
+Above is the number of data rows for each combination of country and indicator using data.table syntax and then use dplyr syntax to group data by country name and calculate the mean value and count of records for each group. The mean value of Ireland, Japan, China are 5234.4765, 4331.2698, 883.6944.
+
+# part2 More data exploration analysis
+
+```{r,echo=TRUE, size='small'}
+setDT(hdro_data)
+
+# Calculate the average Human Development Index (HDI) 
+# for each country and year
+average_HDI_by_country <- hdro_data[index_name == 
+                                      "Human Development Index",
+                                    .(average_HDI = mean(value, 
+                                                         na.rm = TRUE)),
+                                    keyby = .(country_name, year)]
+
+# Identify the latest year of data for each country
+latest_year_idx <- average_HDI_by_country[, .I[year == max(year)], 
+                                          by = country_name]$V1
+
+latest_HDI_by_country <- average_HDI_by_country[latest_year_idx][
+  order(-average_HDI)]
+
+average_HDI_by_country
+latest_HDI_by_country
+```
+
+# Explanation
+
+Above is the average Human Development Index (HDI) for each country and year and the latest year of data for each country.
+
+# part2 More data exploration analysis
+
+```{r,echo=TRUE, size='small'}
+gender_inequality_index <- hdro_data[index_name == 
+                                       "Gender Inequality Index",
+                                     .(mean_value = mean(
+                                       value, na.rm = TRUE)),
+                                     keyby = .(country_name, year)]
+
+
+gender_inequality_index[, prev_value := shift(mean_value),
+                        by = country_name]
+
+gender_inequality_index[, change := mean_value - prev_value]
+print(gender_inequality_index)
+```
+
+# part3 Plot of HDI
+
+```{r,echo=TRUE, size='small'}
+library(ggplot2)
+
+# barplot
+ggplot(latest_HDI_by_country, aes(x = reorder(country_name, -average_HDI), y = average_HDI, fill = country_name)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Human Development Index (HDI) in the Latest Recorded Year by Country",
+       x = "Country",
+       y = "Average HDI") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+# Explanation
+
+The bar graph titled "Human Development Index (HDI) in the Latest Recorded Year by Country" compares the average HDI for Ireland, Japan, and China. It shows Ireland with an anomalously high HDI around 15,000, followed by Japan at about 7,500, and China at around 5,000. These values are unusually high for HDI, which typically ranges between 0 and 1, suggesting a potential error in data scaling or representation. The graph uses distinct colors for each country, facilitating easy visual comparison, but caution is advised in interpreting these results due to the likely data error.
+
+# part3 Plot of GII
+
+```{r,echo=TRUE, size='small'}
+library(ggplot2)
+
+# Plot a line graph to display the changes in the Gender Inequality Index (GII) for the three countries
+ggplot(gender_inequality_index, aes(x = year, y = mean_value, color = country_name, group = country_name)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Annual Change in Gender Inequality Index (GII) for JPN, CHN, and IRL",
+       x = "Year",
+       y = "Mean GII Value") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.title = element_blank())  
+
+```
+
+# Explanation
+
+The line graph titled "Annual Change in Gender Inequality Index (GII) for JPN, CHN, and IRL" shows the trends in GII values for Japan, China, and Ireland from 1990 to around 2020. Japan exhibits a generally upward trend with some volatility, indicating a slow increase in gender inequality over the years. China's GII also shows a steady increase, suggesting worsening gender inequality. In contrast, Ireland's GII initially increases but shows a dramatic drop around 2020, suggesting a significant improvement in gender equality in that year.
