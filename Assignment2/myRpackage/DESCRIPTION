@@ -1,0 +1,22 @@
+Package: myRpackage
+Type: Package
+Title: package for assignment2 of adv r
+Version: 0.0.1
+Authors@R: 
+    person("zixuan", "gao", , "zixuan.gao1@ucdconnect.ie", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package provides functions to read, summarise and plot Human Development Indicators data.
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+Imports:
+  ggplot2,
+  knitr,
+  rmarkdown

@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head></head><body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="page-columns page-rows-contents page-layout-article">
+<div class="sidebar margin-sidebar">
+  <nav class="toc-active">
+    <h2>Table of contents</h2>
+   
+  <ul>
+  <li><a rel="noopener" href="#instructions" class="nav-link active">Instructions</a></li>
+  <li><a rel="noopener" href="#submission" class="nav-link">Submission</a></li>
+  <li><a rel="noopener" href="#how-to-get-the-data" class="nav-link">How to get the data:</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content">
+
+<header class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">STAT40830 - Assignment 1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Isabella Gollini </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>This assignment is based on the material up to topic 4 (mostly about topic 4).</p>
+<section class="level2">
+<h2 class="anchored">Instructions</h2>
+<p>Write a <strong>slide presentation</strong> (15-20 slides) by completing the tasks below on the <em>Human Development Indicators</em> data on at least two countries. (Below you will find instructions on how to download them).</p>
+<p>Use only the R package <code>data.table</code> unless when explicitly stated.</p>
+<ol type="1">
+<li>Use <code>data.table</code> to read in the data and assign the correct class to the variables.</li>
+<li>Merge the data datasets using <code>data.table</code>.</li>
+<li>Do some quick data exploration to know more about your data. (<em>You are allowed to use any R package to answer this question</em>)</li>
+<li>Do some analysis on your data using <code>data.table</code>. You can select which variables to use, and which levels of the factors you may be focus on. You must make use of the <code>keyby</code> argument at least once.</li>
+<li>Do at least 2 plots using some output from the analysis done in step <strong>4</strong>. (<em>You are allowed to use any R package to answer this question</em>).</li>
+</ol>
+<ul>
+<li><p>Complete your assignment creating a Quarto presentation, check that all code and output are correctly displayed in your final document. (You may want to adjust the font size for a single slide/whole document, or the printing options for some R output, e.g.&#160;see <code>help(print.data.table)</code>).</p></li>
+<li><p>You must add some extra not-default options to personalise the aesthetic of the slides. Upload the .css or the .tex file if use them for the personalisation.</p></li>
+<li><p>Write some prose to explain what you intend to do at each step.</p></li>
+<li><p>Remember that the code should be easy to read and to work with. You should add appropriate comments, make code efficient and use sensible notation.</p></li>
+</ul>
+</section>
+<section class="level2">
+<h2 class="anchored">Submission</h2>
+<p>Submission: upload on the <code>Assignment 1</code> assessment on Brightspace your <code>.Qmd</code> file, and a rendered <code>.pdf</code> file of the resulting output. The <code>.pdf</code> file should function as a standalone file for this assignment - that is, it should show all necessary code to find answers, produce plots etc. Code needed to set things up, e.g.&#160;loading packages etc. can be hidden to make the final rendered document neater. Upload the .css or the .tex file if use them for the personalisation.</p>
+<ul>
+<li><p>Note that only your final submission will be marked.</p></li>
+<li><p>There are 10 marks for this assignment. This assignment is worth 10% of your final grade.</p></li>
+<li><p>Late submissions will score 0.</p></li>
+<li><p>You will lose marks if you don’t follow the instructions, in particular if use other packages that are not <code>data.table</code> when not explicitly stated. Or if your presentation is too long (&gt;25 slides).</p></li>
+<li><p>I must be able to render your <code>.Qmd</code> as it is, so don’t use any file path specific to your computer. You can assume that the original data are downloaded in the working directory.</p></li>
+</ul>
+</section>
+<section class="level2">
+<h2 class="anchored">How to get the data:</h2>
+<p>For Assignment 1 you will have to download the dataset of the <em>Human Development Indicators</em> for at least different countries of your choice from <a rel="noopener" href="https://data.humdata.org/dataset/?organization=undp-human-development-reports-office&amp;q=Human+Development+Indicators">data.humdata.org/dataset/?organization=undp-human-development-reports-office&amp;q=Human+Development+Indicators</a>:</p>
+<ul>
+<li>Click over <strong>COUNTRYNAME - Human Development Indicators</strong> and download the dataset called <strong>Human Development Indicators for COUNTRYNAME</strong> it will give you a <code>.csv</code> file. (The dataset contains the following variables: <code>country_code</code>, <code>country_name</code>, <code>indicator_id</code>, <code>indicator_name</code>, <code>index_id</code>, <code>index_name</code>, <code>value</code>, <code>year</code>.)</li>
+<li>repeat this procedure for at least a second country.</li>
+</ul>
+</section>
+
+</main>
+
+
+</div> 
+
+
+
+<script type="module" src="https://s.brightspace.com/lib/bsi/2024.5.196/unbundled/mathjax.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					if (document.querySelector('math') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+						document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+							elm.setAttribute('style', 'display: block; height: 0.5rem;');
+						});
+
+						window.D2L.MathJax.loadMathJax({
+							'outputScale': 1.5,
+							'renderLatex': true
+						});
+					}
+				});</script><script type="module" src="https://s.brightspace.com/lib/bsi/2024.5.196/unbundled/prism.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code);
+					});
+				});</script></body></html>

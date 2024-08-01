@@ -1,0 +1,111 @@
+---
+title: "<span style='display:block;color: #00427A;'>STAT40830<br> Adv Data Programming with R </span> <span style='display:block;margin-top:0%;font-size: 60%; color: #00427A;'>(online)</span>"
+author: "*Isabella Gollini*"
+subtitle: "Topic 9: Shiny <br> "
+footer: "STAT40830 Topic 9: Shiny " 
+format: html
+server: shiny
+---
+
+## Shiny {.smaller}
+
+-   Official website: <https://shiny.posit.co/>
+-   Get started: <https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html>
+-   Online book "Mastering Shiny": <https://mastering-shiny.org/>
+
+## New Shiny app
+
+To create a new shiny app go to *File* \> *New* \> *Shiny Web App*
+
+## Old Faithful app (basic example)
+
+This example is using the Old Faithful Geyser Data about *waiting time between eruptions and the duration of the eruption for the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.* (See `?faithful`)
+
+```{r, eval = FALSE, echo = TRUE}
+library(shiny)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Old Faithful Geyser Data"),
+
+    # Sidebar with a slider input for number of bins 
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 1,
+                        max = 50,
+                        value = 30),
+            selectInput("colour",
+                        "Select a colour:",
+                        list('colour' = c("red", "green", "blue")))
+        ),
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("distPlot")
+        )
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = input$colour, border = 'white',
+        xlab = 'Waiting time to next eruption (in mins)',
+        main = 'Histogram of waiting times')
+    })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+```{r}
+sliderInput("bins", "Number of bins:", 
+            min = 1, max = 50, value = 30)
+selectInput("colour", "Select a colour:",
+            list('colour' = c("red", "green", "blue")))
+plotOutput("distPlot")
+```
+
+```{r}
+#| context: server
+output$distPlot <- renderPlot({
+   x <- faithful[, 2]  # Old Faithful Geyser data
+   bins <- seq(min(x), max(x), length.out = input$bins + 1)
+   hist(x, breaks = bins, col = input$colour, border = 'white',
+        xlab = 'Waiting time to next eruption (in mins)',
+        main = 'Histogram of waiting times')
+})
+```
+
+## Other examples
+
+-   On Brightspace you will find the material for:
+    -   Two more shiny app on Old Faithful Geyser Data
+    -   Math Support Centre (MSC) app by Emma Howard
+-   Collection of shiny apps: <https://shiny.posit.co/r/gallery/>
+
+## Shiny Cheatsheet
+
+<https://rstudio.github.io/cheatsheets/html/shiny.html>
+
+<embed src="https://rstudio.github.io/cheatsheets/shiny.pdf" width="800px" height="800px" />
+
+## Running and deploy documents:
+
+-   See: <https://quarto.org/docs/interactive/shiny/running.html>
+
+## To learn more:
+
+-   For interactive maps in Shiny: <https://rstudio.github.io/leaflet/articles/shiny.html>
+-   Chapter 43 of "The Epidemiologist R Handbook": <https://epirhandbook.com/en/new_pages/shiny_basics.html>
+-   More advanced book "Engineering Production-Grade Shiny Apps": <https://engineering-shiny.org/>
